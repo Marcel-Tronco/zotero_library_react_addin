@@ -5,22 +5,41 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 
 import entryService from "../services/entries"
+import collectionService from "../services/collections"
 
 
 
 export default function EntryTable() {
   const [bibEntries, setBibEntries ] = useState([])
+  const [currentPage, setCurrentPage] = useState(0)
+  const [totalEntries, setTotalEntries] = useState(1)
+  const [rowsPerPage, setRowsPerPage] = useState([1])
+
+  const handleChangePage = () => {
+    return
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    return
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       const fetchedEntries = await entryService.getAll()
       setBibEntries(fetchedEntries)
-    }
-    fetchData()
-
+    })()
   }, [])
+
+  useEffect(() => {
+    (async () => {
+      const tmp = await collectionService.getMainSize()
+      setTotalPages(tmp)
+    })()
+  })
 
   return (
     <TableContainer component={Paper}>
@@ -48,6 +67,15 @@ export default function EntryTable() {
             </TableRow>
           ))}
         </TableBody>
+        <TablePagination
+          rowsPerPageOptions={[1, 2]}
+          component="div"
+          count={totalEntries}
+          rowsPerPage={rowsPerPage}
+          page={currentPage}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Table>
     </TableContainer>
   );

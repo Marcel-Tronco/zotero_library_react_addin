@@ -10,7 +10,6 @@ const itemTypeMapper = (type) => {
 
 const entriesFromZotero = (rawEntryList) => {
   var transformedEntries = []
-  
   for (let el of rawEntryList) {
     try {
       transformedEntries = transformedEntries.concat({
@@ -24,6 +23,9 @@ const entriesFromZotero = (rawEntryList) => {
     }
   }
   return transformedEntries
+}
+const pagedEntriesFromZotero = () => {
+  return
 }
 
 const tagsFromZotero = (rawTags) => {

@@ -1,18 +1,15 @@
 import api from 'zotero-api-client'
 import zoteroDataConverter from "../utils/zoteroDataConverter"
-import getZoteroId from '../getZoteroId'
+import getEnv from '../getEnv'
+import generalRequest from '../utils/generalZoteroApiRequest'
 
-const getAll = async () => {
-  try {
-    const response = await api().library("user", getZoteroId()).tags().get()
-    const rawTags = response.getData()
-    console.log(rawTags)
-    return zoteroDataConverter.tagsFromZotero(rawTags)
-  } catch (error) {
-    console.log(error)
-    return []
-  }
+const getAll = () => {
+  return generalRequest(
+    () => api().library("user", getEnv.zoteroId()).tags().get(),
+    (rawTags) => zoteroDataConverter.tagsFromZotero(rawTags)
+  )
 }
+
 
 export default {
   getAll

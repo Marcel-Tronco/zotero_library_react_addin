@@ -1,19 +1,28 @@
 import api from 'zotero-api-client'
 import zoteroDataConverter from "../utils/zoteroDataConverter"
-import getZoteroId from '../getZoteroId'
+import getEnv from '../getEnv'
+import generalRequest from '../utils/generalZoteroApiRequest'
 
 
 const getAll = async () => {
-  try {
-    const response = await api().library("user", getZoteroId()).items().get()
-    const rawEntryList = response.getData()
-    return zoteroDataConverter.entriesFromZotero(rawEntryList)
-  } catch (error) {
-    console.log(error)
-    return []
+  return generalRequest(
+    () => api().library("user", getEnv.zoteroId()).items().get(),
+    (rawEntryList) => zoteroDataConverter.entriesFromZotero(rawEntryList)
+  )
+}
+
+const getRange = async (fromIndex, maxItems) => {
+  options = {
+    start: fromIndex,
+    limit: maxItems
   }
+  return generalRequest(
+    () => api().library("user", getEnv.zoteroId()).items().get(options),
+    (rawEntryList) => zoteroDataConverter.entriesFromZotero(rawEntryList)
+  )
 }
 
 export default {
-  getAll
+  getAll,
+  getRange
 }
