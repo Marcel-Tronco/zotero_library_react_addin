@@ -7,18 +7,20 @@ import generalRequest from '../utils/generalZoteroApiRequest'
 const getAll = async () => {
   return generalRequest(
     () => api().library("user", getEnv.zoteroId()).items().get(),
-    (rawEntryList) => zoteroDataConverter.entriesFromZotero(rawEntryList)
+    (response) => {
+      return zoteroDataConverter.entriesFromZotero(response.getData())
+    }
   )
 }
 
 const getRange = async (fromIndex, maxItems) => {
-  options = {
+  let options = {
     start: fromIndex,
     limit: maxItems
   }
   return generalRequest(
     () => api().library("user", getEnv.zoteroId()).items().get(options),
-    (rawEntryList) => zoteroDataConverter.entriesFromZotero(rawEntryList)
+    (response) => zoteroDataConverter.entriesFromZotero(response.getData())
   )
 }
 

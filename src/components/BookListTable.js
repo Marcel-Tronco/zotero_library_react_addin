@@ -17,29 +17,40 @@ export default function EntryTable() {
   const [bibEntries, setBibEntries ] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
   const [totalEntries, setTotalEntries] = useState(1)
-  const [rowsPerPage, setRowsPerPage] = useState([1])
+  const [rowsPerPage, setRowsPerPage] = useState(-1)
+
+  useEffect(() => {
+    (async () => {
+      var fetchedEntries
+      if (rowsPerPage === -1) {
+        fetchedEntries = await entryService.getAll()
+      }
+      else {
+        console.log("blub")
+        fetchedEntries = await entryService.getRange( currentPage * rowsPerPage, rowsPerPage)
+      }
+      setBibEntries(fetchedEntries)
+    })()
+  }, [rowsPerPage, currentPage])
+
+  useEffect(() => {
+    (async () => {
+      const tmp = await collectionService.getMainSize()
+      console.log("temp:",tmp)
+      setTotalEntries(tmp)
+    })()
+  })
+
 
   const handleChangePage = () => {
     return
   }
 
-  const handleChangeRowsPerPage = (event) => {
-    return
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(event.target.value)
+    /* event.preventDefault() */ // is it necessary?  
+
   }
-
-  useEffect(() => {
-    (async () => {
-      const fetchedEntries = await entryService.getAll()
-      setBibEntries(fetchedEntries)
-    })()
-  }, [])
-
-  useEffect(() => {
-    (async () => {
-      const tmp = await collectionService.getMainSize()
-      setTotalPages(tmp)
-    })()
-  })
 
   return (
     <TableContainer component={Paper}>
@@ -68,7 +79,7 @@ export default function EntryTable() {
           ))}
         </TableBody>
         <TablePagination
-          rowsPerPageOptions={[1, 2]}
+          rowsPerPageOptions={[{label: "alle", value:-1}, 1, 2]}
           component="div"
           count={totalEntries}
           rowsPerPage={rowsPerPage}
