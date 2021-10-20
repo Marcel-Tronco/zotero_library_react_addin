@@ -4,19 +4,21 @@ import getEnv from '../getEnv'
 import generalRequest from '../utils/generalZoteroApiRequest'
 
 
-const getAll = async () => {
+const getAll = async (tags) => {
+  console.log(tags)
   return generalRequest(
-    () => api().library("user", getEnv.zoteroId()).items().get(),
-    (response) => {
-      return zoteroDataConverter.entriesFromZotero(response.getData())
-    }
-  )
+      () => api().library("user", getEnv.zoteroId()).items().get({tag: tags}),
+      (response) => {
+        return zoteroDataConverter.entriesFromZotero(response.getData())
+      }
+    )
 }
 
-const getRange = async (fromIndex, maxItems) => {
+const getRange = async (fromIndex, maxItems, tags) => {
   let options = {
     start: fromIndex,
-    limit: maxItems
+    limit: maxItems,
+    tag: tags
   }
   return generalRequest(
     () => api().library("user", getEnv.zoteroId()).items().get(options),
