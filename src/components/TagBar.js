@@ -5,8 +5,9 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 
 
-const TagBar = ({tags, selected, setSelected}) => {
+const TagBar = ({tags, selected, setSelected, setPage}) => {
   const handleTagChange = (event, selection) => {
+    setPage(0)
     if (selection === "all") {
       setSelected()
     }

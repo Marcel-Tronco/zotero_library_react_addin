@@ -78,7 +78,7 @@ export default function EntryTable() {
     <Paper className="wide-max-width">
 
       <TableContainer component={Paper}>
-        <TagBar tags={tags} selected={selectedTag} setSelected={setSelectedTag}/>
+        <TagBar tags={tags} selected={selectedTag} setSelected={setSelectedTag} setPage={setCurrentPage}/>
         <Table 
           aria-label="Book shelf"
           sx={{ minWidth: "min-content" }}
