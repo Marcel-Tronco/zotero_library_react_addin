@@ -15,7 +15,7 @@ module.exports = {
     extensions: ['*', '.js']
   },
   output: {
-    filename: 'main.js',
+    filename: 'library_bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
 };

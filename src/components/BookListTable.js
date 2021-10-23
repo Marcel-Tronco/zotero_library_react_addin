@@ -10,6 +10,7 @@ import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 
 import TagBar from './TagBar';
+import BookListRow from './BookListRow';
 
 import entryService from "../services/entries"
 import collectionService from "../services/collections"
@@ -20,9 +21,9 @@ import tagService from "../services/tags"
 export default function EntryTable() {
   const [bibEntries, setBibEntries ] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
-  const [totalEntries, setTotalEntries] = useState(1)
-  const [rowsPerPage, setRowsPerPage] = useState(-1)
-  const [selectedTags, setSelectedTags] = useState([])
+  const [totalEntries, setTotalEntries] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [selectedTag, setSelectedTag] = useState()
   const [tags, setTags] = useState([])
 
   useEffect(() => {
@@ -32,26 +33,34 @@ export default function EntryTable() {
     })()
   },[])
 
+  // Entries Effect
   useEffect(() => {
     (async () => {
       var fetchedEntries
       if (rowsPerPage === -1) {
-        fetchedEntries = await entryService.getAll(selectedTags)
+        fetchedEntries = await entryService.getAll(selectedTag? selectedTag.name : undefined)
       }
       else {
-        fetchedEntries = await entryService.getRange( currentPage * rowsPerPage, rowsPerPage, selectedTags)
+        fetchedEntries = await entryService.getRange( currentPage * rowsPerPage, rowsPerPage, selectedTag? selectedTag.name : undefined)
       }
       setBibEntries(fetchedEntries)
     })()
-  }, [rowsPerPage, currentPage, selectedTags])
+  }, [rowsPerPage, currentPage, selectedTag])
 
+  // total size effect
   useEffect(() => {
     (async () => {
-      const tmp = await collectionService.getMainSize()
-      console.log("temp:",tmp)
-      setTotalEntries(tmp)
+      if (!selectedTag) {
+        console.log(selectedTag)
+        const tmp = await collectionService.getMainSize()
+        console.log("temp:",tmp)
+        setTotalEntries(tmp)
+      }
+      else {
+        setTotalEntries(selectedTag.count)
+      }
     })()
-  },[])
+  },[selectedTag])
 
 
   const handleChangePage = (event, page) => {
@@ -66,12 +75,17 @@ export default function EntryTable() {
 /*    
 */
   return (
-    <Paper>
-      <TagBar tags={tags} selected={selectedTags} setSelected={setSelectedTags}/>
+    <Paper className="wide-max-width">
+
       <TableContainer component={Paper}>
-        <Table aria-label="Book shelf">
+        <TagBar tags={tags} selected={selectedTag} setSelected={setSelectedTag}/>
+        <Table 
+          aria-label="Book shelf"
+          sx={{ minWidth: "min-content" }}
+        >
           <TableHead>
             <TableRow>
+              <TableCell></TableCell>
               <TableCell>Buchtitel</TableCell>
               <TableCell align="right">Autor:innen</TableCell>
               <TableCell align="right">Erscheinungsjahr</TableCell>
@@ -80,21 +94,13 @@ export default function EntryTable() {
           </TableHead>
           <TableBody>
             {bibEntries.map((row) => (
-              <TableRow
-                key={`${row.title}-${row.date}`}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.title}
-                </TableCell>
-                <TableCell align="right">{row.author}</TableCell>
-                <TableCell align="right">{row.date}</TableCell>
-                <TableCell align="right">{row.medium}</TableCell>
-              </TableRow>
+              <BookListRow key={row.key} row={row}/> 
+
             ))}
           </TableBody>
-          <TablePagination
-            rowsPerPageOptions={[{label: "alle", value:-1}, 1, 2]}
+        </Table>
+        <TablePagination
+            rowsPerPageOptions={[5, 10]} //[{label: "alle", value:-1}
             component="div"
             count={totalEntries}
             rowsPerPage={rowsPerPage}
@@ -102,7 +108,6 @@ export default function EntryTable() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-        </Table>
       </TableContainer>
     </Paper>
   );

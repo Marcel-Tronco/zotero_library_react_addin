@@ -3,5 +3,5 @@ import Library from "./components/Library.js"
 import React from "react"
 
 ReactDom.render(
-  <Library/>
-  , document.getElementById('libraryShelf'))
+    <Library/>
+  , document.getElementById('react-root'))

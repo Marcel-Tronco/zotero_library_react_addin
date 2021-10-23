@@ -7,20 +7,29 @@ import ToggleButton from "@mui/material/ToggleButton";
 
 const TagBar = ({tags, selected, setSelected}) => {
   const handleTagChange = (event, selection) => {
-    setSelected(selection)
-    console.log(selected)
+    if (selection === "all") {
+      setSelected()
+    }
+    for (let tagObj of tags){
+      if (tagObj.name === selection) {
+        setSelected(tagObj)
+        return
+      }
+    }
   }
 
   return <Toolbar>
     <ToggleButtonGroup
-      value={selected}
+      value={selected ? selected.name : "all"}
       onChange={handleTagChange}
       aria-label={"Kategorienauswahl"}
+      exclusive
     >
-      {tags.map((tag)=>{
+      {[{name: "all", key:"all"}].concat(tags).map((tag)=>{
         return <ToggleButton
-          value={tag}
-          aria-label={tag}
+          value={tag.name}
+          aria-label={tag.name}
+          key={tag.name}
         > 
           <Typography
             sx={{ flex: '1 1 100%' }}
@@ -28,7 +37,7 @@ const TagBar = ({tags, selected, setSelected}) => {
             variant="subtitle1"
             component="div"
             >
-              {tag}
+              {tag.name}
           </Typography>
         </ToggleButton>
       })}

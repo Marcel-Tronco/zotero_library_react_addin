@@ -16,7 +16,8 @@ const entriesFromZotero = (rawEntryList) => {
         title: el.title,
         date: el.date,
         author: el.creators[0].firstName + " " + el.creators[0].lastName, // todo: Creator field parsing 
-        medium: itemTypeMapper(el.itemType)
+        medium: itemTypeMapper(el.itemType),
+        key: el.key
       })
     } catch (error) {
       console.debug(`Error while parsing Zotero Data: ${error}\n${el.toString()}`)
@@ -24,15 +25,16 @@ const entriesFromZotero = (rawEntryList) => {
   }
   return transformedEntries
 }
-const pagedEntriesFromZotero = () => {
-  return
-}
 
-const tagsFromZotero = (rawTags) => {
+const tagsFromZotero = (apiResponse) => {
   let parsedTags = []
-  for (let rawTag of rawTags) {
+  console.log(apiResponse, apiResponse.getData())
+  for (let rawTag of apiResponse.raw) {
     try {
-      parsedTags = parsedTags.concat([rawTag.tag])
+      parsedTags = parsedTags.concat([{
+        name: rawTag.tag,
+        count: rawTag.meta.numItems
+      }])
     } catch (error) {
       console.debug(error)
     }

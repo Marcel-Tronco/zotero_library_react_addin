@@ -6,7 +6,7 @@ import generalRequest from '../utils/generalZoteroApiRequest'
 const getAll = () => {
   return generalRequest(
     () => api().library("user", getEnv.zoteroId()).tags().get(),
-    (response) => zoteroDataConverter.tagsFromZotero(response.getData())
+    (response) => zoteroDataConverter.tagsFromZotero(response)
   )
 }
 
