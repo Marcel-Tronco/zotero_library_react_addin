@@ -10,9 +10,10 @@ import IconButton from '@mui/material/IconButton';
 import Typography from "@mui/material/Typography";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { cleanISBN } from '../utils/index'
+import ApiBookCover from "./ApiBookCover";
 
 const getCoverUrl = (isbn, size) => {
-  return `https://covers.openlibrary.org/b/isbn/${cleanISBN(isbn)}-${size}.jpg`
+  return `https://covers.openlibrary.org/b/isbn/${cleanISBN(isbn)}-${size}.jpg?default=false`
 }
 
 const BookListRow = ({row}) => {
@@ -31,11 +32,7 @@ const BookListRow = ({row}) => {
                 </IconButton>
               </TableCell>
               <TableCell>
-                { row.isbn
-                  ? <img style={{maxHeight: "3em", marginRight:"1em"}} src={getCoverUrl(row.isbn, "S")}/>
-                  : <MenuBookIcon/>
-                }
-                
+                <ApiBookCover size="S" isbn={row.isbn} />
               </TableCell>
               <TableCell component="th" scope="row">
                 {row.title}
@@ -52,13 +49,7 @@ const BookListRow = ({row}) => {
                     display: 'flex',
                     flexDirection: 'row'
                     }}>
-                    {
-                      row.isbn
-                        ? <img style={{ marginRight: "10px"}} src={getCoverUrl(row.isbn, "M")}/>
-                        : <MenuBookIcon style={{marginRight:"10px"}}/>
-                    }
-                    
-
+                    <ApiBookCover style={{marginRight: "2em"}} size="M" isbn={row.isbn} />
                     <Box>
                     <Typography variant="h6" gutterBottom component="div">
                       Detailansicht
