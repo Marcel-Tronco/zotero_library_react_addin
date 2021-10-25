@@ -86,6 +86,7 @@ export default function EntryTable() {
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
+              <TableCell></TableCell>
               <TableCell>Buchtitel</TableCell>
               <TableCell align="right">Autor:innen</TableCell>
               <TableCell align="right">Erscheinungsjahr</TableCell>

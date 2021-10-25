@@ -17,7 +17,10 @@ const entriesFromZotero = (rawEntryList) => {
         date: el.date,
         author: el.creators[0].firstName + " " + el.creators[0].lastName, // todo: Creator field parsing 
         medium: itemTypeMapper(el.itemType),
-        key: el.key
+        key: el.key,
+        extra: el.extra,
+        abstract: el.abstractNote,
+        isbn: el.ISBN
       })
     } catch (error) {
       console.debug(`Error while parsing Zotero Data: ${error}\n${el.toString()}`)
