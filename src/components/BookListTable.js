@@ -25,6 +25,7 @@ export default function EntryTable() {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [selectedTag, setSelectedTag] = useState()
   const [tags, setTags] = useState([])
+  const [currentSearch, setCurrentSearch] = useState("")
 
   useEffect(() => {
     (async () => {
@@ -38,14 +39,19 @@ export default function EntryTable() {
     (async () => {
       var fetchedEntries
       if (rowsPerPage === -1) {
-        fetchedEntries = await entryService.getAll(selectedTag? selectedTag.name : undefined)
+        fetchedEntries = await entryService.getAll(selectedTag? selectedTag.name : undefined, currentSearch)
       }
       else {
-        fetchedEntries = await entryService.getRange( currentPage * rowsPerPage, rowsPerPage, selectedTag? selectedTag.name : undefined)
+        fetchedEntries = await entryService.getRange(
+          currentPage * rowsPerPage, 
+          rowsPerPage, 
+          selectedTag? selectedTag.name : undefined,
+          currentSearch
+        )
       }
       setBibEntries(fetchedEntries)
     })()
-  }, [rowsPerPage, currentPage, selectedTag])
+  }, [rowsPerPage, currentPage, selectedTag, currentSearch])
 
   // total size effect
   useEffect(() => {
@@ -78,7 +84,13 @@ export default function EntryTable() {
     <Paper className="wide-max-width">
 
       <TableContainer component={Paper}>
-        <TagBar tags={tags} selected={selectedTag} setSelected={setSelectedTag} setPage={setCurrentPage}/>
+        <TagBar 
+          tags={tags} 
+          selected={selectedTag}
+          setSelected={setSelectedTag} 
+          setPage={setCurrentPage} 
+          setCurrentSearch={setCurrentSearch}
+        />
         <Table 
           aria-label="Book shelf"
           sx={{ minWidth: "min-content" }}
