@@ -3,6 +3,8 @@ const itemTypeMapper = (type) => {
   switch (type) {
     case "book":
       return "Buch"
+    case "journalArticle":
+      return "Artikel"
     default:
       return type
   }
@@ -16,10 +18,10 @@ const entriesFromZotero = (rawEntryList) => {
         title: el.title,
         date: el.date,
         creator: el.creators[0].firstName + " " + el.creators[0].lastName, // todo: Creator field parsing 
-        itemType: itemTypeMapper(el.itemType),
+        itemType: el.itemType,
         key: el.key,
         extra: el.extra,
-        abstract: el.abstractNote,
+        abstractNote: el.abstractNote,
         isbn: el.ISBN
       })
     } catch (error) {
@@ -47,5 +49,6 @@ const tagsFromZotero = (apiResponse) => {
 
 export default {
   entriesFromZotero,
-  tagsFromZotero
+  tagsFromZotero,
+  itemTypeMapper
 }

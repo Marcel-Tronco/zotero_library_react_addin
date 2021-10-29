@@ -1,10 +1,9 @@
-const TableObject = {
-  toolbar: {
+export const  toolbar = {
     standardCategories: ["Beispiel 1", "Beispiel 2", "Beispiel 3"],
     preselected: undefined,
     style: undefined
-  },
-  header: {
+  }
+export const  header = {
     initialOrder: {
       id: "title",
       direction: "asc"
@@ -32,11 +31,31 @@ const TableObject = {
         type: "string"
       }
     ]
-  },
-  body: {
-    style: undefined
+  }
+export const  body = {
+    style: undefined,
+    details: {
+      "book": [
+        {
+          fieldName: "abstractNote",
+          label: "Beschreibung",
+        },
+        {
+          fieldName: "language",
+          label: "Sprachen"
+        }
+      ],
+      "default": [
+        {
+          fieldName: "abstractNote",
+          label: "Beschreibung",
+        },
+        {
+          fieldName: "language",
+          label: "Sprachen"
+        }
+      ]
+    }
   }
 
-}
-
-export default TableObject
+export default {toolbar, header, body}

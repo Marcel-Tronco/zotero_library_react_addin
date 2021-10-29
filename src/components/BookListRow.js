@@ -12,10 +12,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { cleanISBN } from '../utils/index'
 import ApiBookCover from "./ApiBookCover";
 
-const getCoverUrl = (isbn, size) => {
-  return `https://covers.openlibrary.org/b/isbn/${cleanISBN(isbn)}-${size}.jpg?default=false`
-}
-
+import BookListDetails from './BookListDetails'
 const BookListRow = ({row}) => {
   const [open, setOpen] = React.useState(false);
   return <>
@@ -50,17 +47,7 @@ const BookListRow = ({row}) => {
                     flexDirection: 'row'
                     }}>
                     <ApiBookCover style={{marginRight: "2em"}} size="M" isbn={row.isbn} />
-                    <Box>
-                    <Typography variant="h6" gutterBottom component="div">
-                      Detailansicht
-                    </Typography>
-                    <Typography variant="h7" gutterBottom component="div">
-                      Beschreibung
-                    </Typography>
-                    <Typography variant="body1" gutterBottom component="div">
-                      {row.abstract}
-                    </Typography>
-                    </Box>
+                    <BookListDetails item={row}/>
                   </Box>
                 </Collapse>
               </TableCell>
