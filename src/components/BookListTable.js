@@ -2,15 +2,16 @@ import React, {useEffect, useState} from 'react';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 
+import TableSpecs from '../TableSpecs'
+
+
 import TagBar from './TagBar';
 import BookListRow from './BookListRow';
+import BookListHeader from './BookListHeader'
 
 import entryService from "../services/entries"
 import collectionService from "../services/collections"
@@ -26,6 +27,10 @@ export default function EntryTable() {
   const [selectedTag, setSelectedTag] = useState()
   const [tags, setTags] = useState([])
   const [currentSearch, setCurrentSearch] = useState("")
+  const [currentFetch, setCurrentFetch] = useState(false)
+  const [order, setOrder] = useState(TableSpecs.header.initialOrder)
+
+  // effect hooks
 
   useEffect(() => {
     (async () => {
@@ -37,7 +42,9 @@ export default function EntryTable() {
   // Entries Effect
   useEffect(() => {
     (async () => {
-      var fetchedEntries
+      let fetchedEntries
+      if (currentFetch) return
+      else setCurrentFetch(true)
       if (rowsPerPage === -1) {
         fetchedEntries = await entryService.getAll(selectedTag? selectedTag.name : undefined, currentSearch)
       }
@@ -50,14 +57,17 @@ export default function EntryTable() {
         )
       }
       setBibEntries(fetchedEntries)
+      setCurrentFetch(false)
     })()
-  }, [rowsPerPage, currentPage, selectedTag, currentSearch])
+  }, [currentPage, selectedTag, rowsPerPage])
 
   // total size effect
   useEffect(() => {
     (async () => {
-      if (!selectedTag) {
-        console.log(selectedTag)
+      if(currentSearch) {
+        setTotalEntries(bibEntries.length)
+      }
+      else if (!selectedTag) {
         const tmp = await collectionService.getMainSize()
         console.log("temp:",tmp)
         setTotalEntries(tmp)
@@ -66,9 +76,10 @@ export default function EntryTable() {
         setTotalEntries(selectedTag.count)
       }
     })()
-  },[selectedTag])
+  },[selectedTag, currentSearch, bibEntries])
 
 
+  // Event Handler
   const handleChangePage = (event, page) => {
     setCurrentPage(page)
   }
@@ -90,21 +101,14 @@ export default function EntryTable() {
           setSelected={setSelectedTag} 
           setPage={setCurrentPage} 
           setCurrentSearch={setCurrentSearch}
+          setRowsPerPage={setRowsPerPage}
+          buttonsDisabled={currentFetch}
         />
         <Table 
           aria-label="Book shelf"
           sx={{ minWidth: "min-content" }}
         >
-          <TableHead>
-            <TableRow>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell>Buchtitel</TableCell>
-              <TableCell align="right">Autor:innen</TableCell>
-              <TableCell align="right">Erscheinungsjahr</TableCell>
-              <TableCell align="right">Medientyp</TableCell>
-            </TableRow>
-          </TableHead>
+          <BookListHeader headerSpecs={TableSpecs.header} order={order} setOrder={setOrder}/>
           <TableBody>
             {bibEntries.map((row) => (
               <BookListRow key={row.key} row={row}/> 
@@ -113,7 +117,7 @@ export default function EntryTable() {
           </TableBody>
         </Table>
         <TablePagination
-            rowsPerPageOptions={[5, 10]} //[{label: "alle", value:-1}
+            rowsPerPageOptions={[{label: "alle", value:-1}, 5, 10, 25]}
             component="div"
             count={totalEntries}
             rowsPerPage={rowsPerPage}

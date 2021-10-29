@@ -9,8 +9,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import IconButton from "@mui/material/IconButton";
 
 
-const TagBar = ({tags, selected, setSelected, setPage, setCurrentSearch}) => {
-  const [SearchFieldText, setSearchFieldText] = useState("")
+const TagBar = ({tags, selected, setSelected, setPage, setCurrentSearch, setRowsPerPage, buttonsDisabled}) => {
+  const [searchFieldText, setSearchFieldText] = useState("")
   const changeSearchFieldText = (event) => {
     setSearchFieldText(event.target.value)
   }
@@ -27,8 +27,10 @@ const TagBar = ({tags, selected, setSelected, setPage, setCurrentSearch}) => {
     }
   }
   const handleSearchIconClick = () => {
-    setCurrentSearch(SearchFieldText)
+    setCurrentSearch(searchFieldText)
     setSearchFieldText("")
+    setPage(0)
+    setRowsPerPage(25)
   }
 
   return <Toolbar>
@@ -37,6 +39,7 @@ const TagBar = ({tags, selected, setSelected, setPage, setCurrentSearch}) => {
       onChange={handleTagChange}
       aria-label={"Kategorienauswahl"}
       exclusive
+      disabled={buttonsDisabled}
       sx={{
         flexGrow:1
       }}
@@ -66,8 +69,10 @@ const TagBar = ({tags, selected, setSelected, setPage, setCurrentSearch}) => {
         label="Suche..."
         variant="outlined"
         onChange={changeSearchFieldText}
+        value={searchFieldText}
       />
       <IconButton
+        disabled={buttonsDisabled}
         onClick={handleSearchIconClick}
       >
         <SearchIcon/>
