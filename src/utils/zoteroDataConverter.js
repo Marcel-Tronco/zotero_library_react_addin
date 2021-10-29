@@ -15,8 +15,8 @@ const entriesFromZotero = (rawEntryList) => {
       transformedEntries = transformedEntries.concat({
         title: el.title,
         date: el.date,
-        author: el.creators[0].firstName + " " + el.creators[0].lastName, // todo: Creator field parsing 
-        medium: itemTypeMapper(el.itemType),
+        creator: el.creators[0].firstName + " " + el.creators[0].lastName, // todo: Creator field parsing 
+        itemType: itemTypeMapper(el.itemType),
         key: el.key,
         extra: el.extra,
         abstract: el.abstractNote,

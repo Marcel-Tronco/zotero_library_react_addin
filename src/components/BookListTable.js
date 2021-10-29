@@ -19,7 +19,7 @@ import tagService from "../services/tags"
 
 
 
-export default function EntryTable() {
+export default function BookListTable() {
   const [bibEntries, setBibEntries ] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
   const [totalEntries, setTotalEntries] = useState(0)
@@ -32,6 +32,7 @@ export default function EntryTable() {
 
   // effect hooks
 
+  // Tags Effect
   useEffect(() => {
     (async () => {
       let tagResult = await tagService.getAll()
@@ -46,20 +47,25 @@ export default function EntryTable() {
       if (currentFetch) return
       else setCurrentFetch(true)
       if (rowsPerPage === -1) {
-        fetchedEntries = await entryService.getAll(selectedTag? selectedTag.name : undefined, currentSearch)
+        fetchedEntries = await entryService.getAll(
+          selectedTag ? selectedTag.name : undefined,
+          currentSearch,
+          order
+        )
       }
       else {
         fetchedEntries = await entryService.getRange(
           currentPage * rowsPerPage, 
           rowsPerPage, 
           selectedTag? selectedTag.name : undefined,
-          currentSearch
+          currentSearch,
+          order
         )
       }
       setBibEntries(fetchedEntries)
       setCurrentFetch(false)
     })()
-  }, [currentPage, selectedTag, rowsPerPage])
+  }, [currentPage, selectedTag, rowsPerPage, order])
 
   // total size effect
   useEffect(() => {
@@ -108,7 +114,7 @@ export default function EntryTable() {
           aria-label="Book shelf"
           sx={{ minWidth: "min-content" }}
         >
-          <BookListHeader headerSpecs={TableSpecs.header} order={order} setOrder={setOrder}/>
+          <BookListHeader headerSpecs={TableSpecs.header} order={order} setOrder={setOrder} sortButtonsDisabled={currentFetch} />
           <TableBody>
             {bibEntries.map((row) => (
               <BookListRow key={row.key} row={row}/> 

@@ -37,9 +37,9 @@ const BookListRow = ({row}) => {
               <TableCell component="th" scope="row">
                 {row.title}
               </TableCell>
-              <TableCell align="right">{row.author}</TableCell>
+              <TableCell align="right">{row.creator}</TableCell>
               <TableCell align="right">{row.date}</TableCell>
-              <TableCell align="right">{row.medium}</TableCell>
+              <TableCell align="right">{row.itemType}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

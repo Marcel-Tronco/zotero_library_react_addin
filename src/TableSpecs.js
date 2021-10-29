@@ -7,17 +7,17 @@ const TableObject = {
   header: {
     initialOrder: {
       id: "title",
-      direction: "asc"      
+      direction: "asc"
     },
     style: undefined,
     cols: [
       {
-        id: "title",
+        id: "title", // must match the Zotero Field name
         label: "Titel",
         type: "string"
       },
       {
-        id: "authors",
+        id: "creator",
         label: "Author:innen",
         type: "string" // todo: set this to string array and adapt "sorting" and display in table and details
       },
@@ -27,7 +27,7 @@ const TableObject = {
         type: "date"
       },
       {
-        id: "media type",
+        id: "itemType",
         label: "Medientyp",
         type: "string"
       }

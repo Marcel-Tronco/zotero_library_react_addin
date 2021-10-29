@@ -4,7 +4,7 @@ import { visuallyHidden } from '@mui/utils';
 
 
 const BookListHeader = (props) => {
-  const {headerSpecs, order, setOrder} = props
+  const {headerSpecs, order, setOrder, sortButtonsDisabled} = props
   const handleSort = (id) => {
     if (id === order.id && order.direction === "asc") {
       setOrder({id, direction:"desc"})
@@ -15,6 +15,7 @@ const BookListHeader = (props) => {
         direction: "asc"
       })
     }
+    console.log("order:", order)
   }
 
   return <TableHead>
@@ -34,6 +35,7 @@ const BookListHeader = (props) => {
               active={order.id === col.id}
               direction={order.id === col.id ? order.direction : 'asc'}
               onClick={() => (handleSort(col.id))}
+              disabled={sortButtonsDisabled}
             >
               {col.label}
               {order.id === col.id ? (
