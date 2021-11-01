@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   entry: ['babel-polyfill', path.resolve(__dirname, './src/index.js')],
@@ -18,4 +18,4 @@ module.exports = {
     filename: 'library_bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
-};
+}

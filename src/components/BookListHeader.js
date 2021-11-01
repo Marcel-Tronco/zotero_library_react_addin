@@ -1,7 +1,6 @@
 import React from 'react'
 import { TableRow, TableCell, TableHead, TableSortLabel, Box } from '@mui/material'
-import { visuallyHidden } from '@mui/utils';
-
+import { visuallyHidden } from '@mui/utils'
 
 const BookListHeader = (props) => {
   const {headerSpecs, order, setOrder, sortButtonsDisabled} = props
@@ -44,7 +43,6 @@ const BookListHeader = (props) => {
                 </Box>
               ) : null}
             </TableSortLabel>
-
           </TableCell>
         })}
       </TableRow>

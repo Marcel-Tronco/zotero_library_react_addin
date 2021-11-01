@@ -1,14 +1,24 @@
 import React, {useState} from "react"
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { getCoverUrl} from "../utils";
+import MenuBookIcon from '@mui/icons-material/MenuBook'
+import {Box, Typography, Link} from '@mui/material'
 
-const BookCoverThumbnail = ({size, isbn, ...otherProps}) => {
+import { getCoverUrl} from "../utils"
+
+const ApiBookCover = ({size, isbn, ...otherProps}) => {
   const [errored, setErrored] = useState(false)
   const onError = () => {
     setErrored(true)
   }
+  console.log(size)
   return ! isbn || errored
     ? <MenuBookIcon {...otherProps}/>
-    : <img src={getCoverUrl(isbn,size)} onError={onError} {...otherProps}/>
+    : size !== "M" 
+      ? <img src={getCoverUrl(isbn, size)} onError={onError} {...otherProps}/>
+      : <Box sx={{ display:'flex', flexDirection: 'column' }}>
+          <img src={getCoverUrl(isbn, size)} onError={onError} {...otherProps}/>
+          <Typography variant="caption">
+            Cover wird bereitgestellt von <Link href="https://openlibrary.org" rel="noreferrer">open library</Link>
+          </Typography>
+        </Box>
 }
-export default BookCoverThumbnail
+export default ApiBookCover

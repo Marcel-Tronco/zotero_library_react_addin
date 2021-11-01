@@ -1,7 +1,7 @@
 import React from "react"
 import { body as typeDetailsSpecs } from "../TableSpecs"
-import Box from '@mui/material/Box';
-import Typography from "@mui/material/Typography";
+import Box from '@mui/material/Box'
+import Typography from "@mui/material/Typography"
 
 const SpecificContent = (props) => {
   console.log("SPECS:", props.detailsType)
@@ -15,14 +15,13 @@ const SpecificContent = (props) => {
     </>
 }
 
-
 const BookListDetails = (props) => {
-  
   return <Box>
           <Typography variant="h6" gutterBottom component="div">
             Detailansicht
           </Typography>
-          <SpecificContent item={props.item} detailsType={typeDetailsSpecs.details[props.item.itemType]
+          <SpecificContent item={props.item} detailsType={ 
+            typeDetailsSpecs.details[props.item.itemType]
             ? props.item.itemType
             : "default"
           }/>

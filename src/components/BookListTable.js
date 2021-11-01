@@ -1,23 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react'
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TablePagination from '@mui/material/TablePagination';
-import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableContainer from '@mui/material/TableContainer'
+import TablePagination from '@mui/material/TablePagination'
+import Paper from '@mui/material/Paper'
 
 import TableSpecs from '../TableSpecs'
 
-
-import TagBar from './TagBar';
-import BookListRow from './BookListRow';
+import TagBar from './TagBar'
+import BookListRow from './BookListRow'
 import BookListHeader from './BookListHeader'
 
 import entryService from "../services/entries"
 import collectionService from "../services/collections"
 import tagService from "../services/tags"
-
-
 
 export default function BookListTable() {
   const [bibEntries, setBibEntries ] = useState([])
@@ -84,7 +81,6 @@ export default function BookListTable() {
     })()
   },[selectedTag, currentSearch, bibEntries])
 
-
   // Event Handler
   const handleChangePage = (event, page) => {
     setCurrentPage(page)
@@ -95,11 +91,9 @@ export default function BookListTable() {
     /* event.preventDefault() */ // is it necessary?  
 
   }
-/*    
-*/
+
   return (
     <Paper className="wide-max-width">
-
       <TableContainer component={Paper}>
         <TagBar 
           tags={tags} 
@@ -116,10 +110,7 @@ export default function BookListTable() {
         >
           <BookListHeader headerSpecs={TableSpecs.header} order={order} setOrder={setOrder} sortButtonsDisabled={currentFetch} />
           <TableBody>
-            {bibEntries.map((row) => (
-              <BookListRow key={row.key} row={row}/> 
-
-            ))}
+            {bibEntries.map((row) => <BookListRow key={row.key} row={row}/> )}
           </TableBody>
         </Table>
         <TablePagination
@@ -133,5 +124,5 @@ export default function BookListTable() {
           />
       </TableContainer>
     </Paper>
-  );
+  )
 }

@@ -1,20 +1,20 @@
 import React from "react"
 
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Typography from "@mui/material/Typography";
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { cleanISBN } from '../utils/index'
-import ApiBookCover from "./ApiBookCover";
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
+import Link from '@mui/material/Link'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import Box from '@mui/material/Box'
+import Collapse from '@mui/material/Collapse'
+import IconButton from '@mui/material/IconButton'
+import ApiBookCover from "./ApiBookCover"
 
 import BookListDetails from './BookListDetails'
+
 const BookListRow = ({row}) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
   return <>
            <TableRow
              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -46,7 +46,7 @@ const BookListRow = ({row}) => {
                     display: 'flex',
                     flexDirection: 'row'
                     }}>
-                    <ApiBookCover style={{marginRight: "2em"}} size="M" isbn={row.isbn} />
+                      <ApiBookCover style={{marginRight: "2em"}} size="M" isbn={row.isbn} />
                     <BookListDetails item={row}/>
                   </Box>
                 </Collapse>

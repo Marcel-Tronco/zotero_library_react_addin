@@ -1,7 +1,7 @@
 import ReactDom from "react-dom"
-import Library from "./components/Library.js"
+import BookListTable from "./components/BookListTable.js"
 import React from "react"
 
 ReactDom.render(
-    <Library/>
+    <BookListTable/>
   , document.getElementById('react-root'))

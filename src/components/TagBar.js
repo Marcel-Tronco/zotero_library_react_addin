@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from "react";
-import Toolbar from '@mui/material/Toolbar';
-import Typography from "@mui/material/Typography";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import ToggleButton from "@mui/material/ToggleButton";
-import TextField from "@mui/material/TextField";
+import React, {useState} from "react"
+import Toolbar from '@mui/material/Toolbar'
+import Typography from "@mui/material/Typography"
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
+import ToggleButton from "@mui/material/ToggleButton"
+import TextField from "@mui/material/TextField"
 import Box from "@mui/material/Box"
-import SearchIcon from '@mui/icons-material/Search';
-import IconButton from "@mui/material/IconButton";
+import SearchIcon from '@mui/icons-material/Search'
+import IconButton from "@mui/material/IconButton"
 
 
 const TagBar = ({tags, selected, setSelected, setPage, setCurrentSearch, setRowsPerPage, buttonsDisabled}) => {
