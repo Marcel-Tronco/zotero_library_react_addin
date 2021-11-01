@@ -109,7 +109,7 @@ export default function BookListTable() {
         >
           <BookListHeader headerSpecs={TableSpecs.header} order={order} setOrder={setOrder} sortButtonsDisabled={currentFetch} />
           <TableBody>
-            {bibEntries.map((row) => <BookListRow key={row.key} row={row}/> )}
+            {bibEntries.map((row) => <BookListRow key={row.key} zoteroEntry={row}/> )}
           </TableBody>
         </Table>
         <TablePagination

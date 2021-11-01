@@ -10,25 +10,38 @@ const itemTypeMapper = (type) => {
   }
 }
 
-const entriesFromZotero = (rawEntryList) => {
-  var transformedEntries = []
-  for (let el of rawEntryList) {
-    try {
-      transformedEntries = transformedEntries.concat({
-        title: el.title,
-        date: el.date,
-        creator: el.creators[0].firstName + " " + el.creators[0].lastName, // todo: Creator field parsing 
-        itemType: el.itemType,
-        key: el.key,
-        extra: el.extra,
-        abstractNote: el.abstractNote,
-        isbn: el.ISBN
-      })
-    } catch (error) {
-      console.debug(`Error while parsing Zotero Data: ${error}\n${el.toString()}`)
+class ZoteroEntry{
+  constructor(rawEntry) {
+    this.data = rawEntry
+  }
+  get creatorOverview() {
+    if (this.data.creators.length === 0) {
+      return "Keine Angabe"
+    }
+    else if (this.data.creators.length === 1) {
+      return this.data.creators[0].firstName + " " + this.data.creators[0].lastName
+    }
+    else {
+      return `${this.data.creators[0].firstName} ${this.data.creators[0].lastName} et. al.`
     }
   }
-  return transformedEntries
+  get creatorDetail() {
+    let creators = Array.from(this.data.creators)
+    let firstCreator = creators.shift()
+    let detail = `${firstCreator.firstName} ${firstCreator.lastName} (${firstCreator.creatorType})`
+    for (let creator of creators) {
+      detail += `, ${creator.firstName} ${creator.lastName} (${creator.creatorType})`
+    }
+    return detail
+  }
+}
+
+const entriesFromZotero = (rawEntryList) => {
+  let zoteroEntries = []
+  for (let el of rawEntryList) {
+    zoteroEntries.push(new ZoteroEntry(el))
+  }
+  return zoteroEntries
 }
 
 const tagsFromZotero = (apiResponse) => {

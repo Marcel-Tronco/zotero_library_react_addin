@@ -13,8 +13,10 @@ import ApiBookCover from "./ApiBookCover"
 
 import BookListDetails from './BookListDetails'
 
-const BookListRow = ({row}) => {
+const BookListRow = ({zoteroEntry}) => {
   const [open, setOpen] = React.useState(false)
+
+
   return <>
            <TableRow
              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -29,14 +31,14 @@ const BookListRow = ({row}) => {
                 </IconButton>
               </TableCell>
               <TableCell>
-                <ApiBookCover size="S" isbn={row.isbn} />
+                <ApiBookCover size="S" isbn={zoteroEntry.data.ISBN} />
               </TableCell>
               <TableCell component="th" scope="row">
-                {row.title}
+                {zoteroEntry.data.title}
               </TableCell>
-              <TableCell align="right">{row.creator}</TableCell>
-              <TableCell align="right">{row.date}</TableCell>
-              <TableCell align="right">{row.itemType}</TableCell>
+              <TableCell align="right">{zoteroEntry.creatorOverview}</TableCell>
+              <TableCell align="right">{zoteroEntry.data.date}</TableCell>
+              <TableCell align="right">{zoteroEntry.data.itemType}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -46,8 +48,8 @@ const BookListRow = ({row}) => {
                     display: 'flex',
                     flexDirection: 'row'
                     }}>
-                      <ApiBookCover style={{marginRight: "2em"}} size="M" isbn={row.isbn} />
-                    <BookListDetails item={row}/>
+                      <ApiBookCover style={{marginRight: "2em"}} size="M" isbn={zoteroEntry.data.ISBN} />
+                    <BookListDetails item={zoteroEntry}/>
                   </Box>
                 </Collapse>
               </TableCell>
