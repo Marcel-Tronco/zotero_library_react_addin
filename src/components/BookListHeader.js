@@ -14,7 +14,6 @@ const BookListHeader = (props) => {
         direction: "asc"
       })
     }
-    console.log("order:", order)
   }
 
   return <TableHead>

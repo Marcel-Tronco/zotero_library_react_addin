@@ -4,7 +4,7 @@ const generalRequest = async (specificGetter, specificTransformer) => {
     const transformed = specificTransformer(response)
     return transformed
   } catch (error) {
-    console.log(error)
+    console.debug(error)
     return []
   }
 }

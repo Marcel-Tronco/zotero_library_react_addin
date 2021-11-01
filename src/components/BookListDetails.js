@@ -4,7 +4,6 @@ import Box from '@mui/material/Box'
 import Typography from "@mui/material/Typography"
 
 const SpecificContent = (props) => {
-  console.log("SPECS:", props.detailsType)
   return <>
       {typeDetailsSpecs.details[props.detailsType].map((relevantField) => {
         return <>

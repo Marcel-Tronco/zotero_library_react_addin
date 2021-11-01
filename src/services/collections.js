@@ -8,7 +8,6 @@ const getMainSize = async () => {
     () => api().library("user", getEnv.zoteroId()).collections().get(opts),
     (response) => {
       if ( response && response.raw.length > 0) {
-        //console.log("blub", response.raw[0].meta.numItems)
         return [response.raw[0].meta.numItems]
       }
       else{

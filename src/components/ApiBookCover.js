@@ -9,7 +9,6 @@ const ApiBookCover = ({size, isbn, ...otherProps}) => {
   const onError = () => {
     setErrored(true)
   }
-  console.log(size)
   return ! isbn || errored
     ? <MenuBookIcon {...otherProps}/>
     : size !== "M" 

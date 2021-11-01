@@ -72,7 +72,6 @@ export default function BookListTable() {
       }
       else if (!selectedTag) {
         const tmp = await collectionService.getMainSize()
-        console.log("temp:",tmp)
         setTotalEntries(tmp)
       }
       else {
