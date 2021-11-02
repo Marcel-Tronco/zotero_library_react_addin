@@ -26,7 +26,6 @@ export class ZoteroEntry{
     return detail
   }
   get itemType() {
-    console.log("BLUB:", this.data.itemType)
     return ZTM.itemTypeLabel(this.data.itemType)
   }
 }
@@ -41,7 +40,6 @@ const entriesFromZotero = (rawEntryList) => {
 
 const tagsFromZotero = (apiResponse) => {
   let parsedTags = []
-  console.log(apiResponse, apiResponse.getData())
   for (let rawTag of apiResponse.raw) {
     try {
       parsedTags = parsedTags.concat([{
