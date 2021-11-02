@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
 import Paper from '@mui/material/Paper'
 
-import TableSpecs from '../TableSpecs'
+import TableSpecs from '../models/TableSpecs'
 
 import TagBar from './TagBar'
 import BookListRow from './BookListRow'

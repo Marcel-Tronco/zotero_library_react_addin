@@ -1,16 +1,7 @@
+import { ZoteroTypeMapper as ZTM } from "./TableSpecs"
 
-const itemTypeMapper = (type) => {
-  switch (type) {
-    case "book":
-      return "Buch"
-    case "journalArticle":
-      return "Artikel"
-    default:
-      return type
-  }
-}
 
-class ZoteroEntry{
+export class ZoteroEntry{
   constructor(rawEntry) {
     this.data = rawEntry
   }
@@ -28,11 +19,15 @@ class ZoteroEntry{
   get creatorDetail() {
     let creators = Array.from(this.data.creators)
     let firstCreator = creators.shift()
-    let detail = `${firstCreator.firstName} ${firstCreator.lastName} (${firstCreator.creatorType})`
+    let detail = `${firstCreator.firstName} ${firstCreator.lastName} (${ZTM.creatorTypeLabel(firstCreator.creatorType)})`
     for (let creator of creators) {
-      detail += `, ${creator.firstName} ${creator.lastName} (${creator.creatorType})`
+      detail += `, ${creator.firstName} ${creator.lastName} (${ZTM.creatorTypeLabel(creator.creatorType)})`
     }
     return detail
+  }
+  get itemType() {
+    console.log("BLUB:", this.data.itemType)
+    return ZTM.itemTypeLabel(this.data.itemType)
   }
 }
 
@@ -63,5 +58,4 @@ const tagsFromZotero = (apiResponse) => {
 export default {
   entriesFromZotero,
   tagsFromZotero,
-  itemTypeMapper
 }

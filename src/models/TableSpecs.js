@@ -16,9 +16,9 @@ export const  header = {
         type: "string"
       },
       {
-        id: "creator",
+        id: "creators",
         label: "Author:innen",
-        type: "string" // todo: set this to string array and adapt "sorting" and display in table and details
+        type: "list[CreatorObject]"
       },
       {
         id: "date",
@@ -58,4 +58,34 @@ export const  body = {
     }
   }
 
-export default {toolbar, header, body}
+export class ZoteroTypeMapper {
+  static #zoteroTypeMap = {
+    fields: {
+      itemType: {
+        book: "Buch",
+        journalArticle: "Artikel",
+        default: "k.A."
+      },
+      creators: {
+        creatorType: {
+          author: "Autor:in",
+          editor: "Herausgeber:in",
+          contributor: "Mitarbeiter:in",
+          default: "Beteiligte:r"
+        }
+      }
+    }
+  }
+  static creatorTypeLabel(zoteroTypeString) {
+    return ZoteroTypeMapper.#zoteroTypeMap.fields.creators.creatorType[zoteroTypeString]
+      ? ZoteroTypeMapper.#zoteroTypeMap.fields.creators.creatorType[zoteroTypeString]
+      : ZoteroTypeMapper.#zoteroTypeMap.fields.creators.creatorType.default
+  }
+  static itemTypeLabel(itemTypeString) {
+    return ZoteroTypeMapper.#zoteroTypeMap.fields.itemType[itemTypeString]
+      ? ZoteroTypeMapper.#zoteroTypeMap.fields.itemType[itemTypeString]
+      : ZoteroTypeMapper.#zoteroTypeMap.fields.itemType.default
+  }
+}
+
+export default {toolbar, header, body, ZoteroTypeMapper}

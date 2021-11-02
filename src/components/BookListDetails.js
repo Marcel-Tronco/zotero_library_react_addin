@@ -1,5 +1,5 @@
 import React from "react"
-import { body as typeDetailsSpecs } from "../TableSpecs"
+import { body as typeDetailsSpecs } from "../models/TableSpecs"
 import Box from '@mui/material/Box'
 import Typography from "@mui/material/Typography"
 

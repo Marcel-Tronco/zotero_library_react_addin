@@ -1,5 +1,5 @@
 import api from 'zotero-api-client'
-import zoteroDataConverter from "../utils/zoteroDataConverter"
+import zoteroDataConverter from "../models/zoteroDataConverter"
 import getEnv from '../getEnv'
 import generalRequest from '../utils/generalZoteroApiRequest'
 
