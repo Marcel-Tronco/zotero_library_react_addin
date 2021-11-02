@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -12,9 +12,7 @@ import TagBar from './TagBar'
 import BookListRow from './BookListRow'
 import BookListHeader from './BookListHeader'
 
-import entryService from "../services/entries"
-import collectionService from "../services/collections"
-import tagService from "../services/tags"
+import { tagHook, entryHook, totalSizeHook } from '../hooks'
 
 export default function BookListTable() {
   const [bibEntries, setBibEntries ] = useState([])
@@ -30,55 +28,27 @@ export default function BookListTable() {
   // effect hooks
 
   // Tags Effect
-  useEffect(() => {
-    (async () => {
-      let tagResult = await tagService.getAll()
-      setTags(tagResult)
-    })()
-  },[])
+  tagHook(setTags)
 
   // Entries Effect
-  useEffect(() => {
-    (async () => {
-      let fetchedEntries
-      if (currentFetch) return
-      else setCurrentFetch(true)
-      if (rowsPerPage === -1) {
-        fetchedEntries = await entryService.getAll(
-          selectedTag ? selectedTag.name : undefined,
-          currentSearch,
-          order
-        )
-      }
-      else {
-        fetchedEntries = await entryService.getRange(
-          currentPage * rowsPerPage, 
-          rowsPerPage, 
-          selectedTag? selectedTag.name : undefined,
-          currentSearch,
-          order
-        )
-      }
-      setBibEntries(fetchedEntries)
-      setCurrentFetch(false)
-    })()
-  }, [currentPage, selectedTag, rowsPerPage, order])
-
+  entryHook(
+    currentFetch,
+    setCurrentFetch, 
+    setBibEntries,
+    rowsPerPage,
+    selectedTag,
+    currentSearch,
+    currentPage,
+    order
+  )
+  
   // total size effect
-  useEffect(() => {
-    (async () => {
-      if(currentSearch) {
-        setTotalEntries(bibEntries.length)
-      }
-      else if (!selectedTag) {
-        const tmp = await collectionService.getMainSize()
-        setTotalEntries(tmp)
-      }
-      else {
-        setTotalEntries(selectedTag.count)
-      }
-    })()
-  },[selectedTag, currentSearch, bibEntries])
+  totalSizeHook(
+    currentSearch,
+    bibEntries,
+    selectedTag,
+    setTotalEntries
+  )
 
   // Event Handler
   const handleChangePage = (event, page) => {
