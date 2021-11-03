@@ -1,0 +1,8 @@
+node_modules
+dist
+example*
+.gitignore
+workinglog.md
+src/models/TableSpecs.js
+.eslintrc.js
+webpack*

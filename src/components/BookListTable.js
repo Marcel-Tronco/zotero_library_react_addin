@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -21,7 +21,7 @@ export default function BookListTable() {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [selectedTag, setSelectedTag] = useState()
   const [tags, setTags] = useState([])
-  const [currentSearch, setCurrentSearch] = useState("")
+  const [currentSearch, setCurrentSearch] = useState('')
   const [currentFetch, setCurrentFetch] = useState(false)
   const [order, setOrder] = useState(TableSpecs.header.initialOrder)
 
@@ -33,7 +33,7 @@ export default function BookListTable() {
   // Entries Effect
   entryHook(
     currentFetch,
-    setCurrentFetch, 
+    setCurrentFetch,
     setBibEntries,
     rowsPerPage,
     selectedTag,
@@ -41,7 +41,7 @@ export default function BookListTable() {
     currentPage,
     order
   )
-  
+
   // total size effect
   totalSizeHook(
     currentSearch,
@@ -57,25 +57,25 @@ export default function BookListTable() {
 
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(event.target.value)
-    /* event.preventDefault() */ // is it necessary?  
+    /* event.preventDefault() */ // is it necessary?
 
   }
 
   return (
     <Paper className="wide-max-width">
       <TableContainer component={Paper}>
-        <TagBar 
-          tags={tags} 
+        <TagBar
+          tags={tags}
           selected={selectedTag}
-          setSelected={setSelectedTag} 
-          setPage={setCurrentPage} 
+          setSelected={setSelectedTag}
+          setPage={setCurrentPage}
           setCurrentSearch={setCurrentSearch}
           setRowsPerPage={setRowsPerPage}
           buttonsDisabled={currentFetch}
         />
-        <Table 
+        <Table
           aria-label="Book shelf"
-          sx={{ minWidth: "min-content" }}
+          sx={{ minWidth: 'min-content' }}
         >
           <BookListHeader headerSpecs={TableSpecs.header} order={order} setOrder={setOrder} sortButtonsDisabled={currentFetch} />
           <TableBody>
@@ -83,14 +83,14 @@ export default function BookListTable() {
           </TableBody>
         </Table>
         <TablePagination
-            rowsPerPageOptions={[{label: "alle", value:-1}, 5, 10, 25]}
-            component="div"
-            count={totalEntries}
-            rowsPerPage={rowsPerPage}
-            page={currentPage}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+          rowsPerPageOptions={[{ label: 'alle', value:-1 }, 5, 10, 25]}
+          component="div"
+          count={totalEntries}
+          rowsPerPage={rowsPerPage}
+          page={currentPage}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </TableContainer>
     </Paper>
   )

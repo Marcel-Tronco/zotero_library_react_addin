@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import tagService from '../services/tags'
 import entryService from '../services/entries'
 import collectionService from '../services/collections'
@@ -13,15 +13,15 @@ export const tagHook = (setTags) => {
 }
 
 export const entryHook = (
-    currentFetch,
-    setCurrentFetch, 
-    setBibEntries,
-    rowsPerPage,
-    selectedTag,
-    currentSearch,
-    currentPage,
-    order
-  ) => {
+  currentFetch,
+  setCurrentFetch,
+  setBibEntries,
+  rowsPerPage,
+  selectedTag,
+  currentSearch,
+  currentPage,
+  order
+) => {
   useEffect(() => {
     (async () => {
       let fetchedEntries
@@ -36,8 +36,8 @@ export const entryHook = (
       }
       else {
         fetchedEntries = await entryService.getRange(
-          currentPage * rowsPerPage, 
-          rowsPerPage, 
+          currentPage * rowsPerPage,
+          rowsPerPage,
           selectedTag? selectedTag.name : undefined,
           currentSearch,
           order

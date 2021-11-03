@@ -1,22 +1,22 @@
-import React, {useState} from "react"
+import React, { useState } from 'react'
 import Toolbar from '@mui/material/Toolbar'
-import Typography from "@mui/material/Typography"
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
-import ToggleButton from "@mui/material/ToggleButton"
-import TextField from "@mui/material/TextField"
-import Box from "@mui/material/Box"
+import Typography from '@mui/material/Typography'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+import ToggleButton from '@mui/material/ToggleButton'
+import TextField from '@mui/material/TextField'
+import Box from '@mui/material/Box'
 import SearchIcon from '@mui/icons-material/Search'
-import IconButton from "@mui/material/IconButton"
+import IconButton from '@mui/material/IconButton'
 
 
-const TagBar = ({tags, selected, setSelected, setPage, setCurrentSearch, setRowsPerPage, buttonsDisabled}) => {
-  const [searchFieldText, setSearchFieldText] = useState("")
+const TagBar = ({ tags, selected, setSelected, setPage, setCurrentSearch, setRowsPerPage, buttonsDisabled }) => {
+  const [searchFieldText, setSearchFieldText] = useState('')
   const changeSearchFieldText = (event) => {
     setSearchFieldText(event.target.value)
   }
   const handleTagChange = (event, selection) => {
     setPage(0)
-    if (selection === "all") {
+    if (selection === 'all') {
       setSelected()
     }
     for (let tagObj of tags){
@@ -28,35 +28,35 @@ const TagBar = ({tags, selected, setSelected, setPage, setCurrentSearch, setRows
   }
   const handleSearchIconClick = () => {
     setCurrentSearch(searchFieldText)
-    setSearchFieldText("")
+    setSearchFieldText('')
     setPage(0)
     setRowsPerPage(25)
   }
 
   return <Toolbar>
     <ToggleButtonGroup
-      value={selected ? selected.name : "all"}
+      value={selected ? selected.name : 'all'}
       onChange={handleTagChange}
-      aria-label={"Kategorienauswahl"}
+      aria-label={'Kategorienauswahl'}
       exclusive
       disabled={buttonsDisabled}
       sx={{
         flexGrow:1
       }}
     >
-      {[{name: "all", key:"all"}].concat(tags).map((tag)=>{
+      {[{ name: 'all', key:'all' }].concat(tags).map((tag) => {
         return <ToggleButton
           value={tag.name}
           aria-label={tag.name}
           key={tag.name}
-        > 
+        >
           <Typography
             sx={{ flex: '1 1 100%' }}
             color="inherit"
             variant="subtitle1"
             component="div"
-            >
-              {tag.name}
+          >
+            {tag.name}
           </Typography>
         </ToggleButton>
       })}

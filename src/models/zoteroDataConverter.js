@@ -1,4 +1,4 @@
-import { ZoteroTypeMapper as ZTM } from "./TableSpecs"
+import { ZoteroTypeMapper as ZTM } from './TableSpecs'
 
 
 export class ZoteroEntry{
@@ -7,10 +7,10 @@ export class ZoteroEntry{
   }
   get creatorOverview() {
     if (this.data.creators.length === 0) {
-      return "Keine Angabe"
+      return 'Keine Angabe'
     }
     else if (this.data.creators.length === 1) {
-      return this.data.creators[0].firstName + " " + this.data.creators[0].lastName
+      return this.data.creators[0].firstName + ' ' + this.data.creators[0].lastName
     }
     else {
       return `${this.data.creators[0].firstName} ${this.data.creators[0].lastName} et. al.`
