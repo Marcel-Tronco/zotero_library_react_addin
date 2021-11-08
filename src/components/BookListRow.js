@@ -13,11 +13,10 @@ import BookListDetails from './BookListDetails'
 
 const BookListRow = ({ zoteroEntry }) => {
   const [open, setOpen] = React.useState(false)
-
-
   return <>
     <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+      key={zoteroEntry.data.key + '-Overview'}
     >
       <TableCell>
         <IconButton
@@ -38,7 +37,7 @@ const BookListRow = ({ zoteroEntry }) => {
       <TableCell align="right">{zoteroEntry.data.date}</TableCell>
       <TableCell align="right">{zoteroEntry.itemType}</TableCell>
     </TableRow>
-    <TableRow>
+    <TableRow key={zoteroEntry.data.key + '-Details'}>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <Box sx={{

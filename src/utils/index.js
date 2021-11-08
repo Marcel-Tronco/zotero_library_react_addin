@@ -1,5 +1,5 @@
 export const cleanISBN = (isbn) => {
-  return isbn.replace('-', '')
+  return isbn.replaceAll('-', '')
 }
 
 export const getCoverUrl = (isbn, size) => {

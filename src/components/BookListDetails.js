@@ -6,10 +6,10 @@ import Typography from '@mui/material/Typography'
 const SpecificContent = (props) => {
   return <>
     {typeDetailsSpecs.details[props.detailsType].map((relevantField) => {
-      return <>
+      return <div key={relevantField.label}>
         <Typography variant='h7' gutterBottom component='div'>{relevantField.label}</Typography>
         <Typography variant='body1' gutterBottom component='div'>{props.item[relevantField.fieldName]}</Typography>
-      </>
+      </div>
     })}
   </>
 }
